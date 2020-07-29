@@ -1,13 +1,5 @@
 import { ADD_TODO, DEL_TODO } from "../_actions/types";
-import { List, Map, Record } from "immutable";
-
-const Todo = Record({
-  name: null,
-  id: null,
-  createAt: Date.now(),
-  willcompleteAt: null,
-  processState: 0,
-});
+import { Record } from "immutable";
 
 const State = Record([]);
 

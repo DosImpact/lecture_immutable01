@@ -1,5 +1,5 @@
 import { countTypes } from "../_actions/types";
-import { List, Map, Record } from "immutable";
+import { List, Map } from "immutable";
 
 const initState = Map({
   counters: List([

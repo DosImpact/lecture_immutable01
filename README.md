@@ -1,3 +1,16 @@
+# REDUX + REACT + IMMUTABLE.js
+
+![https://i.ytimg.com/vi/YeCbmOI_pVs/maxresdefault.jpg](https://i.ytimg.com/vi/YeCbmOI_pVs/maxresdefault.jpg)
+
+# install
+
+```
+yarn install
+yarn start
+```
+
+# code snippet
+
 ```js
 import { Record, List } from "immutable";
 
