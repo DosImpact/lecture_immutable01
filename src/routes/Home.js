@@ -9,15 +9,54 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
-const Counter = () => {};
-const CounterList = () => {};
+const Counter = ({
+  className,
+  children,
+  number,
+  color,
+  CountUp,
+  CountDown,
+  CountRemove,
+  CountSetColor,
+  index,
+}) => {
+  const [nextColor, setNextColor] = useState("");
+  const changeColor = (e) => {
+    console.log("changeColor");
+    e.preventDefault();
+    if (nextColor) {
+      CountSetColor(index, nextColor);
+      setNextColor("");
+    }
+  };
+  return (
+    <li>
+      <div>
+        {color} | {number}
+        <button onClick={() => CountDown(index)}>-</button>
+        <button onClick={() => CountUp(index)}>+</button>
+        <button onClick={() => CountRemove(index)}>REMOVE</button>
+        <input
+          value={nextColor}
+          onChange={(e) => setNextColor(e.target.value)}
+          type="text"
+          onKeyPress={(e) => (e.key === "Enter" ? changeColor(e) : null)}
+        ></input>
+        {children}
+      </div>
+    </li>
+  );
+};
 
 function Home() {
   const dispatch = useDispatch();
   const counterStore = useSelector((state) => state.counterStore);
   const counters = counterStore.get("counters");
 
-  const counterUp = (index) => dispatch(counterUp({ index }));
+  const CountUp = (index) => dispatch(countUp(index));
+  const CountDown = (index) => dispatch(countDown(index));
+  const CountRemove = (index) => dispatch(countRemove(index));
+  const CountSetColor = (index, color) => dispatch(countSetColor(index, color));
 
   const [color, setColor] = useState("Pink");
   const [num, setNum] = useState("10");
@@ -25,7 +64,7 @@ function Home() {
   const handleSumit = (e) => {
     e.preventDefault();
     if (color !== "" && num !== "") {
-      dispatch(countCreate({ color, number: num }));
+      dispatch(countCreate(color, Number(num)));
     }
     setColor("");
     setNum("");
@@ -50,9 +89,16 @@ function Home() {
         {counters.map((e, i) => {
           const { number, color } = e.toJS();
           return (
-            <li key={i}>
-              {number} | {color}
-            </li>
+            <Counter
+              CountUp={CountUp}
+              CountDown={CountDown}
+              CountRemove={CountRemove}
+              CountSetColor={CountSetColor}
+              key={i}
+              index={i}
+              number={number}
+              color={color}
+            />
           );
         })}
       </ul>
