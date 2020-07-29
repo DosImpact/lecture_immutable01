@@ -16,20 +16,22 @@ const initState = Map({
 
 export default (state = initState, action) => {
   const counters = state.get("counters");
-
+  let { index } = action.payload.index;
   switch (action.type) {
     case countTypes.COUNT_CREATE:
-      const { color = "white", number = 0 } = action.payload;
-      counters.push(Map({ color, number }));
-      return state.update("counters", counters);
+      return state.set("counters", counters.push(Map({ ...action.payload })));
+
     case countTypes.COUNT_DOWN:
-      return [...state];
+      return state.updateIn(["counters", index, "number"], (prev) => prev - 1);
+
     case countTypes.COUNT_REMOVE:
-      return [...state];
+      return state.deleteIn(["counters", index]);
+
     case countTypes.COUNT_SET_COLOR:
-      return [...state];
+      return state.set(["counters", index, "color"], action.payload.color);
+
     case countTypes.COUNT_UP:
-      return [...state];
+      return state.updateIn(["counters", index, "number"], (prev) => prev + 1);
     default:
       // throw Error("No type Def in counter reducers");
       return state;
