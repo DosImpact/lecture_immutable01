@@ -1,4 +1,4 @@
-import { addTodo, delTodo } from "../_actions/todo_actions";
+import { ADD_TODO, DEL_TODO } from "../_actions/types";
 import { List, Map, Record } from "immutable";
 
 const Todo = Record({
@@ -13,9 +13,9 @@ const State = Record([]);
 
 export default (state = new State(), action) => {
   switch (action.type) {
-    case addTodo:
+    case ADD_TODO:
       return [...state];
-    case delTodo:
+    case DEL_TODO:
       return [...state];
     default:
       return state;
